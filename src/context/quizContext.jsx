@@ -110,6 +110,7 @@ const reducer = (state, action) => {
     }
     case quizType.next: {
       const answers = handleAnswersUpdate(state.questions[state.index]);
+      console.log(state.questions[state.index] , state.index , "clicked Next")
       return {
         ...state,
         index: state.index++,
