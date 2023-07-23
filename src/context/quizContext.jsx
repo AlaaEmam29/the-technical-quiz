@@ -113,7 +113,7 @@ const reducer = (state, action) => {
       console.log(state.questions[state.index] , state.index , "clicked Next")
       return {
         ...state,
-        index: state.index++,
+        index: state.index+1,
         answers,
         ...iniNextQuestionObj,
       };
