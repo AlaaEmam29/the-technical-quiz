@@ -181,6 +181,7 @@ export const QuizContextProvider = ({ children }) => {
     dispatch({
       type: quizType.next,
     });
+    console.log(state , "---next--")
   };
 
  const fetchForm = async (e) => {
