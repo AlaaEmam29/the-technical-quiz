@@ -3,12 +3,14 @@ import { useQuizContext } from '../context/quizContext'
 
 export default function Progress() {
   const { state, maxPoints } = useQuizContext();
+  const index = state.index 
+  const limit = state.limit
   return (
     <>
       <header className="progress">
-        <progress max={  state.limit - 1} value={state.limit === 1 && state.submit ? state.index + 1 : state.index} />
+        <progress max={  limit - 1} value={limit === 1 && state.submit ? index + 1 : index} />
         <p className="totalQ">
-          Question <strong>{state.index + 1}</strong> / {state.limit}
+          Question <strong>{index + 1}</strong> / {limit}
         </p>
 
         <p className="totalPoints">

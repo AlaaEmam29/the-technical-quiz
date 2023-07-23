@@ -2,7 +2,6 @@ import axios from 'axios';
 import _ from 'lodash';
 import React, { createContext, useContext, useReducer } from 'react';
 const QuizContext = createContext();
-
 const URL = `https://quizapi.io/api/v1/questions?apiKey=jKpHvcvfciru3zAdrl6oE9Q34bLN15cidZTU24ka`;
 const quizType = {
   limit: 'limit',
@@ -186,35 +185,23 @@ export const QuizContextProvider = ({ children }) => {
 
  const fetchForm = async (e) => {
     dispatch({ type: quizType.loading });
-const CancelToken = axios.CancelToken;
-const source = CancelToken.source();
     try {
 
-            const response = await axios.get(        `${URL}${state.category !== 'any' ? `&category=${state.category}` : ""}&difficulty=${state.difficulty}&limit=${state.limit}`, {
-              cancelToken: source.token,
-            });
+            const response = await axios.get(`${URL}${state.category !== 'any' ? `&category=${state.category}` : ""}&difficulty=${state.difficulty}&limit=${state.limit}`);
             console.log(response);
 
         
       dispatch({ type: e.target.dataset.type, payload: response.data });
     } catch (error) {
-      if (axios.isCancel(error)) {
-              console.log('Previous request canceled, new request is send');
-              dispatch({
-                type: quizType.error,
-                payload: 'Previous request canceled, new request is send',
-              });
-            } else {
+      
+             
               console.log(error);
               dispatch({
                 type: quizType.error,
                 payload: error.response.data.error
                   ? error.response.data.error
                   : error.message,
-              });
-            }
-
-      
+              });    
     }
   };
   const [state, dispatch] = useReducer(reducer, initialState);
