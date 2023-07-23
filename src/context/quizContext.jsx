@@ -40,11 +40,16 @@ const iniNextQuestionObj = {
   submit: false,
   passed: false,
 };
-
+const handleAnswersUpdate = (question) => {
+  const answersObj = question.correct_answers;
+  return Object.keys(answersObj).filter((ans) => answersObj[ans] === 'true');
+};
 function handleQuizTypeUpdate(state, action, timer = false) {
-    const answersObj = action.payload[state.index];
-    const answers =  Object.keys(answersObj).filter((ans) => answersObj[ans] === 'true');
+    const answersObj = action.payload[state.index].correct_answers;
 
+  const answers = Object.keys(answersObj).filter(
+    (ans) => answersObj[ans] === 'true',
+  );
 const secondsRemaining = timer
   ? action.payload.length * 45
   : state.secondsRemaining;
@@ -108,10 +113,11 @@ const reducer = (state, action) => {
       };
     }
     case quizType.next: {
-    const answersObj = action.payload[state.index];
+    const answersObj = state.questions[state.index].correct_answers;
+
     const answers = Object.keys(answersObj).filter(
       (ans) => answersObj[ans] === 'true',
-    );
+    );      
       return {
         ...state,
         index: state.index+1,
@@ -183,6 +189,7 @@ export const QuizContextProvider = ({ children }) => {
     dispatch({
       type: quizType.next,
     });
+    console.log(state , "---next--")
   };
 
  const fetchForm = async (e) => {
